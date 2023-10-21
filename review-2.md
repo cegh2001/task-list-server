@@ -19,3 +19,6 @@ Ser más Productivos: Al tener un lugar central para administrar sus tareas, los
 Reducir el Estrés: Mantener un registro de las tareas pendientes les ayuda a sentirse más organizados y a reducir el estrés relacionado con las fechas de vencimiento.
 
 No Olvidar Compromisos: Los recordatorios y la capacidad de marcar las tareas como completadas les ayudan a no olvidar compromisos importantes.
+
+Ademas ahora TaskC tiene errores para casos en donde no se manejen las solicitudes https validas, asi como al faltar
+informacion requerida y verifica los parametros.
