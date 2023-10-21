@@ -3,10 +3,12 @@ const app = express();
 const listViewRouter = require("./list-view-router");
 const listEditRouter = require("./list-edit-router");
 
+const tasks = require("./data");
+
 const instr = [
   {
     instruccion:
-      "Accede a la ruta list-edit-router o list-view-router para modificar las tareas o verlas filtradas",
+      "Accede a la ruta tasks para ver las tareas, y a list-edit o list-view para modificar las tareas o verlas filtradas",
   },
 ];
 
@@ -22,6 +24,10 @@ app.use((req, res, next) => {
 
 app.get("/", (req, res) => {
   res.status(200).json(instr);
+});
+
+app.get("/tasks", (req, res) => {
+  res.status(200).json(tasks);
 });
 
 // Usar el router de list-view en la ruta /list-view

@@ -32,7 +32,6 @@ listEditRouter.use((req, res, next) => {
 // Ruta para listar tareas
 listEditRouter.get("/", (req, res) => {
   res.status(200).json(instr);
-  res.status(200).json(tasks);
 });
 
 // Ruta para crear una tarea

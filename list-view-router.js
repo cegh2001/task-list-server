@@ -22,7 +22,6 @@ listViewRouter.param("id", (req, res, next, id) => {
 // Ruta para listar tareas
 listViewRouter.get("/", (req, res) => {
   res.status(200).json(instr);
-  res.status(200).json(tasks);
 });
 
 // Ruta para listar tareas completas
