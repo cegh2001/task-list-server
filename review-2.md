@@ -10,6 +10,8 @@ Crear Tareas: Con TaskC, puedes fácilmente crear tareas nuevas. Solo tienes que
 
 Listar Tareas: Puedes ver todas tus tareas pendientes y completadas en una lista organizada. Esto te ayuda a tener una visión general de tus responsabilidades.
 
+Ahora puedes ver o buscar una sola tarea a traves de su id.
+
 Marcar Tareas como Completadas: Al completar una tarea, simplemente puedes marcarla como "hecha". Esto te ayuda a mantener un registro de tus logros.
 
 Los usuarios usarían TaskC porque simplifica la gestión de tareas diarias, lo que les permite:
@@ -22,3 +24,7 @@ No Olvidar Compromisos: Los recordatorios y la capacidad de marcar las tareas co
 
 Ademas ahora TaskC tiene errores para casos en donde no se manejen las solicitudes https validas, asi como al faltar
 informacion requerida y verifica los parametros.
+
+Se agregaron nuevas funciones de autenticacion y autorizacion para asegurar
+un uso adecuado de la aplicacion. Tambien se simplifico el codigo para una mejor 
+comprension.

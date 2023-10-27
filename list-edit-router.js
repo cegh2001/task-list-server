@@ -8,16 +8,26 @@ const instr = [
   },
 ];
 
-const tasks = require('./data');
+const tasks = require("./data");
 
-//middleware para manejar los errores de solicitud POST y PUT
-listEditRouter.use((req, res, next) => {
+// Middleware de autorización
+const authorize = (allowedRoles) => {
+  return (req, res, next) => {
+    if (allowedRoles.includes(req.role)) {
+      next();
+    } else {
+      res.status(403).json({ error: "Access not allowed" });
+    }
+  };
+};
+
+// Middleware para manejar los errores de solicitud POST y PUT
+const validateRequestBody = (req, res, next) => {
   if (req.method === "POST" || req.method === "PUT") {
     if (!req.body || Object.keys(req.body).length === 0) {
       return res.status(400).json({ error: "Cuerpo de solicitud vacío" });
     } else {
-      // Verifica que el cuerpo de la solicitud contenga la información requerida
-      const requiredAttributes = ["description", "completed"]; 
+      const requiredAttributes = ["description", "completed"];
       for (const attr of requiredAttributes) {
         if (!(attr in req.body)) {
           return res.status(400).json({ error: `Falta el atributo: ${attr}` });
@@ -26,23 +36,26 @@ listEditRouter.use((req, res, next) => {
     }
   }
   next();
-});
+};
 
+// Rutas con middleware de autorización y validación de cuerpo de solicitud
+listEditRouter.use(validateRequestBody);
 
-// Ruta para listar tareas
-listEditRouter.get("/", (req, res) => {
+listEditRouter.get("/", authorize(["admin", "user"]), (req, res) => {
   res.status(200).json(instr);
 });
 
-// Ruta para crear una tarea
-listEditRouter.post("/create-task", (req, res) => {
-  const newTask = req.body;
-  tasks.push(newTask);
-  res.status(201).json(newTask);
-});
+listEditRouter.post(
+  "/create-task",
+  authorize(["admin", "user"]),
+  (req, res) => {
+    const newTask = req.body;
+    tasks.push(newTask);
+    res.status(201).json(newTask);
+  }
+);
 
-// Ruta para eliminar una tarea por ID
-listEditRouter.delete("/delete-task/:id", (req, res) => {
+listEditRouter.delete("/delete-task/:id", authorize(["admin"]), (req, res) => {
   const taskId = parseInt(req.params.id);
   const index = tasks.findIndex((task) => task.id === taskId);
   if (index !== -1) {
@@ -53,8 +66,7 @@ listEditRouter.delete("/delete-task/:id", (req, res) => {
   }
 });
 
-// Ruta para actualizar una tarea por ID
-listEditRouter.put("/update-task/:id", (req, res) => {
+listEditRouter.put("/update-task/:id", authorize(["admin"]), (req, res) => {
   const taskId = parseInt(req.params.id);
   const updatedTask = req.body;
   const index = tasks.findIndex((task) => task.id === taskId);
