@@ -4,7 +4,7 @@ const listEditRouter = express.Router();
 const instr = [
   {
     instruccion:
-      "Accede a la ruta create-tasks, delete-tasks o update-tasks para crear, eliminar o actualizar una tarea, por id",
+      "Accede a la ruta create-task, delete-task o update-task para crear, eliminar o actualizar una tarea (en estos casos usa parametros por id)",
   },
 ];
 
@@ -55,6 +55,10 @@ listEditRouter.post(
   }
 );
 
+listEditRouter.get("/delete-task", authorize(["admin"]), (req, res) => {
+  res.status(200).json("usa los parametros por id");
+});
+
 listEditRouter.delete("/delete-task/:id", authorize(["admin"]), (req, res) => {
   const taskId = parseInt(req.params.id);
   const index = tasks.findIndex((task) => task.id === taskId);
@@ -64,6 +68,10 @@ listEditRouter.delete("/delete-task/:id", authorize(["admin"]), (req, res) => {
   } else {
     res.status(404).send("Tarea no encontrada");
   }
+});
+
+listEditRouter.get("/update-task", authorize(["admin"]), (req, res) => {
+  res.status(200).json("usa los parametros por id");
 });
 
 listEditRouter.put("/update-task/:id", authorize(["admin"]), (req, res) => {
